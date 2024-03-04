@@ -1,33 +1,36 @@
 package com.cs4520.assignment4
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.cs4520.assignment4.databinding.LoginFragmentBinding
 
-class LoginFragment : Fragment(R.layout.login_fragment){
+class LoginFragment : Fragment(){
 
-    private lateinit var username: EditText
-    private lateinit var password: EditText
-    private lateinit var loginButton: Button
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private var _binding: LoginFragmentBinding? = null
+    private val binding get() = _binding!!
 
-        username = view.findViewById(R.id.username_field)
-        password = view.findViewById(R.id.password_field)
-        loginButton = view.findViewById(R.id.login_button)
-        loginButton.setOnClickListener {
-            if(username.text.toString().equals("admin") && password.text.toString().equals("admin")){
-                username.setText("")
-                password.setText("")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) : View {
+        _binding = LoginFragmentBinding.inflate(inflater, container, false)
+        //bindings
+        binding.loginButton.setOnClickListener {
+            val username = binding.usernameField.text.toString()
+            val password = binding.passwordField.text.toString()
+            if(username == "admin" && password == "admin"){
+                binding.usernameField.setText("")
+                binding.passwordField.setText("")
                 findNavController().navigate(R.id.action_loginFragment_to_productListFragment)
             } else {
-                username.setText("")
-                password.setText("")
-
                 val text = "Username or password is incorrect."
                 val duration = Toast.LENGTH_SHORT
 
@@ -35,5 +38,7 @@ class LoginFragment : Fragment(R.layout.login_fragment){
                 toast.show()
             }
         }
+
+        return binding.root
     }
 }
