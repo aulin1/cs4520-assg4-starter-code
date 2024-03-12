@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.cs4520.assignment4.databinding.LoginFragmentBinding
 import com.cs4520.assignment4.databinding.ProductListFragmentBinding
 
-class ProductListFragment : Fragment(){
+class ProductListFragment : Fragment(){ //TODO: remember to check xml files for hardcoded strings
 
     private var _binding: ProductListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -37,16 +36,27 @@ class ProductListFragment : Fragment(){
         _binding = null
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this, ProductViewModelFactory())[ProductViewModel::class.java]
+
+        //TODO: fix
+
+        initObserver()
+
+    }
+
+    private fun initObserver() {
+
+        viewModel.ResponseData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                binding.progressbar.visibility = View.INVISIBLE
+                viewModel.setAdapterData(it.items)
+
+            } else {
+                Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
 }
-
-/*"Use Recyclerview, MVVM, livedata & constraint layouts wherever applicable.
-Data should be loaded on when the user navigates to the Product list fragment. Load data using retrofit and coroutines.
-For Loading data :
-While the data is loading, the user should see an infinite progress bar.
-On success, present it to the UI and save it to the database.
-If api returns 0-zero results, display a message on screen “No products available”.
-Json can have repeated products.This should not be shown on UI.
-Products in json can have empty or missing data. This should not be shown on UI.
-When offline, data should be fetched from the database if available and displayed on UI"
-
- "Dates for Foods missing. Should've made the visibility as View.VISIBLE for the TextView" */

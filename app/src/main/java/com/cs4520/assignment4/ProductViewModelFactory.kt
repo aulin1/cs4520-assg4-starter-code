@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 class ProductViewModelFactory : ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProductViewModel::class.java)){
-            return ProductViewModel() as T
+            return ProductViewModel(repository = DataRepository()) as T
         }
         throw IllegalArgumentException("Creating ViewModel failed")
     }
