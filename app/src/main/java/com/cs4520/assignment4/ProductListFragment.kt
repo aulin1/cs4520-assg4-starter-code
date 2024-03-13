@@ -16,7 +16,6 @@ class ProductListFragment : Fragment(){
     //TODO: deal with if API returns no products - error screen
     //TODO: get 30 items
     //TODO: match_parent width
-    //TODO: food is dissapearring
     //TODO: coroutines
 
     private var _binding: ProductListFragmentBinding? = null

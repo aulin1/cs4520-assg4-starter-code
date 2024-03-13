@@ -1,5 +1,6 @@
 package com.cs4520.assignment4
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -14,8 +14,8 @@ class ProductData{
     var name = ""
     @SerializedName("type")
     var type = ""
+    @SerializedName("expiryDate")
+    var expiry = ""
     @SerializedName("price")
     var price: Float = -1.0f
-    @SerializedName("expiry")
-    var expiry = ""
 }
