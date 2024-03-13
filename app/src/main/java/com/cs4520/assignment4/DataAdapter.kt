@@ -15,17 +15,39 @@ class DataAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
     private fun convertData(data : ArrayList<ProductData>) : ArrayList<Product> {
         val convertedData = ArrayList<Product>()
         for(item in data){
-            //TODO: Repeat check + valid field check
             var newItem : Product
             if(item.type == "Equipment"){
-                newItem = Product.EquipmentProduct(item.name, item.price)
-                convertedData.add(newItem)
+                if(item.name == "" || item.price < 0){ //invalid answers, so we don't add it to the list
+                    continue
+                } else {
+                    newItem = Product.EquipmentProduct(item.name, item.price)
+                    if(!isInList(newItem, convertedData)){ //no repeats
+                        convertedData.add(newItem)
+                    }
+                }
             } else if(item.type == "Food"){
-                newItem = Product.FoodProduct(item.name, item.expiry, item.price)
-                convertedData.add(newItem)
+                if(item.name == "" || item.price <0 || item.expiry == ""){
+                    continue
+                } else {
+                    newItem = Product.FoodProduct(item.name, item.expiry, item.price)
+                    if(!isInList(newItem, convertedData)){ //no repeats
+                        convertedData.add(newItem)
+                    }
+                }
+            } else { //It isn't a valid type, so we don't add it to the list
+                continue
             }
         }
         return convertedData
+    }
+
+    private fun isInList(product : Product, list : ArrayList<Product>): Boolean{
+        for(item in list){
+            if(product == item){
+                return true
+            }
+        }
+        return false
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

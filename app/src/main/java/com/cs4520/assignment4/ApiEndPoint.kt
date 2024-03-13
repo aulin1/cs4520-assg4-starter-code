@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiEndPoint {
-    @GET("search/repositories")
+    @GET(Api.ENDPOINT)
     //fun getProductList(@Query("q") q : String) : Call<ResponseModel>
-    fun getProductList() : Call<ResponseModel>
+    fun getProductList() : Call<ArrayList<ProductData>>
 }
