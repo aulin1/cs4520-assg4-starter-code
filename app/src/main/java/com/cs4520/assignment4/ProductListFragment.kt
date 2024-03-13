@@ -14,9 +14,8 @@ import com.cs4520.assignment4.databinding.ProductListFragmentBinding
 
 class ProductListFragment : Fragment(){
     //TODO: offline status
-
-    //TODO: get 30 items - piazza
-    //TODO: error screen - piazza
+    //TODO: get 30 items
+    //TODO: error screen
 
     private var _binding: ProductListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -58,6 +57,7 @@ class ProductListFragment : Fragment(){
                     binding.textView.visibility = View.VISIBLE
                 }
             } else {
+                binding.progressbar.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
             }
         })
