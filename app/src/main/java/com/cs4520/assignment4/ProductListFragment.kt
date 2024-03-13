@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.cs4520.assignment4.databinding.ProductListFragmentBinding
 
 class ProductListFragment : Fragment(){
-    //TODO: coroutines
     //TODO: offline status
 
     //TODO: get 30 items - piazza
@@ -51,6 +50,7 @@ class ProductListFragment : Fragment(){
 
         viewModel.ResponseData.observe(viewLifecycleOwner, Observer {
             if (viewModel.ResponseData.value != null) {
+                Log.d("Testing API", viewModel.getAdapter().itemCount.toString())
                 binding.progressbar.visibility = View.GONE
                 binding.textView.visibility = View.GONE
                 viewModel.setAdapterData(viewModel.ResponseData.value!!)

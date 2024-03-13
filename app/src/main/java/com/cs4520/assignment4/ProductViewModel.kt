@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 
@@ -31,23 +32,20 @@ class ProductViewModel() : ViewModel() {
 
 
     private fun makeApiCall(input: String?=null) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getAllRepository()
-                .enqueue(object : retrofit2.Callback<ArrayList<ProductData>> {
-                    override fun onFailure(call: Call<ArrayList<ProductData>>, t: Throwable) {
-                        Log.d("Testing API", t.toString())
+        viewModelScope.launch(Dispatchers.IO){
+            val response = repository.getAllRepository()
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        _ResponseData.value = response.body()
+                    } else {
                         _ResponseData.value = null
                     }
-
-                    override fun onResponse(
-                        call: Call<ArrayList<ProductData>>,
-                        response: Response<ArrayList<ProductData>>
-                    ) {
-                        Log.d("Testing API", "Succeeded")
-                        if (!response.isSuccessful) _ResponseData.value =
-                            null else _ResponseData.value = response.body()
-                    }
-                })
+                }  catch (e: Throwable) {
+                    Log.d("Testing API", e.toString())
+                    _ResponseData.value = null
+                }
+            }
         }
     }
 }
