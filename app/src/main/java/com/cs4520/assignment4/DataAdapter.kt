@@ -52,7 +52,7 @@ class DataAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ProductItemBinding.inflate(layoutInflater)
+        val binding = ProductItemBinding.inflate(layoutInflater, parent, false)
         return ProductViewHolder(binding)
     }
 

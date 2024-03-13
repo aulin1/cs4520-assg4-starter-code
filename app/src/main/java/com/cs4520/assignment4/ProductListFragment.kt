@@ -13,10 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.cs4520.assignment4.databinding.ProductListFragmentBinding
 
 class ProductListFragment : Fragment(){
-    //TODO: deal with if API returns no products - error screen
-    //TODO: get 30 items
-    //TODO: match_parent width
     //TODO: coroutines
+    //TODO: offline status
+
+    //TODO: get 30 items - piazza
+    //TODO: error screen - piazza
 
     private var _binding: ProductListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -30,8 +31,6 @@ class ProductListFragment : Fragment(){
         savedInstanceState: Bundle?
     ) : View {
         _binding = ProductListFragmentBinding.inflate(inflater, container, false)
-
-
 
         viewModelFactory = ProductViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory)[ProductViewModel::class.java]
@@ -52,9 +51,12 @@ class ProductListFragment : Fragment(){
 
         viewModel.ResponseData.observe(viewLifecycleOwner, Observer {
             if (viewModel.ResponseData.value != null) {
-                binding.progressbar.visibility = View.INVISIBLE
+                binding.progressbar.visibility = View.GONE
+                binding.textView.visibility = View.GONE
                 viewModel.setAdapterData(viewModel.ResponseData.value!!)
-
+                if(viewModel.getAdapter().itemCount == 0){
+                    binding.textView.visibility = View.VISIBLE
+                }
             } else {
                 Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
             }
