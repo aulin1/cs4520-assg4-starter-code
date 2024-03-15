@@ -1,6 +1,5 @@
 package com.cs4520.assignment4
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,10 +26,10 @@ class DataAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
                     }
                 }
             } else if(item.type == "Food"){
-                if(item.name == "" || item.price <0 || item.expiry == ""){
+                if(item.name == "" || item.price <0 || item.expiryDate == null){
                     continue
                 } else {
-                    newItem = Product.FoodProduct(item.name, item.expiry, item.price)
+                    newItem = Product.FoodProduct(item.name, item.expiryDate, item.price)
                     if(!isInList(newItem, convertedData)){ //no repeats
                         convertedData.add(newItem)
                     }

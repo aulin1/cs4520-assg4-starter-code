@@ -1,5 +1,7 @@
 package com.cs4520.assignment4
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 sealed class Product(name: String, type: String, expiry: String?, price: Float){
@@ -9,13 +11,12 @@ sealed class Product(name: String, type: String, expiry: String?, price: Float){
     data class EquipmentProduct(val name: String, val price: Float) : Product(name = name, "Equipment", expiry = null, price = price)
 }
 
-class ProductData{
-    @SerializedName("name")
-    var name = ""
-    @SerializedName("type")
-    var type = ""
-    @SerializedName("expiryDate")
-    var expiry = ""
-    @SerializedName("price")
-    var price: Float = -1.0f
-}
+@Entity
+data class ProductData(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val name : String,
+    val type : String,
+    val expiryDate : String?,
+    var price: Float
+)

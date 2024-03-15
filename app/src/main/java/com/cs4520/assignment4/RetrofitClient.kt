@@ -5,12 +5,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
     companion object{
-        fun getRetrofitInstance(): Retrofit {
+        fun getRetrofitInstance(): ApiEndPoint {
 
             return Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .build()
+                .build().create(ApiEndPoint::class.java)
         }
     }
 }
